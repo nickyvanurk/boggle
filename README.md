@@ -1,6 +1,6 @@
-# JavaScript Client/Server Boilerplate
+# Boggle
 
-A JavaScript client/server boilerplate project to reduce the time it takes to start a new project.
+Boggle game implementation.
 
 ## License
 
