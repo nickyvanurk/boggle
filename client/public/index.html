@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boggle</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        user-select: none;
+      }
+
+      #boggle-container {
+        display: flex;
+        flex-direction: column;
+        width: 490px;
+        margin: 0 auto;
+      }
+
+      #board {
+        border: 5px solid #FFCA08;
+        background-color: #398BD4;
+        padding: 5px;
+        margin-top: 20px;
+      }
+
+      .row {
+        display: flex;
+        text-align:center;
+        flex-direction:row;
+        padding: 5px;
+      }
+
+      .boggle:hover {
+        cursor: pointer;
+      }
+
+      .boggle {
+        width: 80px;
+        height: 80px;
+        border-radius: 5px;
+        background-color: #ffffff;
+        box-shadow: -4px 2px 8px 1px rgba(0,0,0,0.69);
+        flex:1 1 auto;
+        margin:5px;
+      }
+
+      .boggle.selected {
+        background-color: #ACCEEC;
+      }
+
+      .boggle span {
+        font-weight: bold;
+        display: block;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="boggle-container">
+      <div id="board">
+        <div class="row">
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+          <div class="boggle">
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./bundle.js"></script>
+  </body>
+</html>
