@@ -1,103 +1,116 @@
 import './math';
 import $ from 'jquery';
 
-// TODO:
+// DONE:
 //    Create board generator that takes optional seed argument
 //    currentWord array filled with mouseclick/hover
 //    submit word on mouse release
 
-const boggleDice = [
-  ['R', 'I', 'F', 'O', 'B', 'X'],
-  ['I', 'F', 'E', 'H', 'E', 'Y'],
-  ['D', 'E', 'N', 'O', 'W', 'S'],
-  ['U', 'T', 'O', 'K', 'N', 'D'],
-  ['H', 'M', 'S', 'R', 'A', 'O'],
-  ['L', 'U', 'P', 'E', 'T', 'S'],
-  ['A', 'C', 'I', 'T', 'O', 'A'],
-  ['Y', 'L', 'G', 'K', 'U', 'E'],
-  ['Q', 'B', 'M', 'J', 'O', 'A'],
-  ['E', 'H', 'I', 'S', 'P', 'N'],
-  ['V', 'E', 'T', 'I', 'G', 'N'],
-  ['B', 'A', 'L', 'I', 'Y', 'T'],
-  ['E', 'Z', 'A', 'V', 'N', 'D'],
-  ['R', 'A', 'L', 'E', 'S', 'C'],
-  ['U', 'W', 'I', 'L', 'R', 'G'],
-  ['P', 'A', 'C', 'E', 'M', 'D']
-];
+// TODO:
+//    Display found word
+//    Calculate score for word
+//    Add score and display score
+//    3 minute timer
+//    Add player + score to highscore by order
+//    Show only top 10 highscore
 
-function getRandomBoard(seed, dice) {
-  const rng = Math.seed(seed);
-  const board = [];
+class Boggle {
+  constructor() {
+    this.domElements = {
+      document: $(document),
+      letters: $('#board > .row .boggle')
+    };
 
-  for (const die of dice) {
-    board.push(getRandomDiceValue(rng, die));
+    this.domElements.document.mouseup(this.onMouseUp.bind(this));
+    this.domElements.letters.mousedown(this.onMouseDown.bind(this));
+    this.domElements.letters.mouseenter(this.onMouseEnter.bind(this));
+
+    this.dice = [
+      ['R', 'I', 'F', 'O', 'B', 'X'],
+      ['I', 'F', 'E', 'H', 'E', 'Y'],
+      ['D', 'E', 'N', 'O', 'W', 'S'],
+      ['U', 'T', 'O', 'K', 'N', 'D'],
+      ['H', 'M', 'S', 'R', 'A', 'O'],
+      ['L', 'U', 'P', 'E', 'T', 'S'],
+      ['A', 'C', 'I', 'T', 'O', 'A'],
+      ['Y', 'L', 'G', 'K', 'U', 'E'],
+      ['Q', 'B', 'M', 'J', 'O', 'A'],
+      ['E', 'H', 'I', 'S', 'P', 'N'],
+      ['V', 'E', 'T', 'I', 'G', 'N'],
+      ['B', 'A', 'L', 'I', 'Y', 'T'],
+      ['E', 'Z', 'A', 'V', 'N', 'D'],
+      ['R', 'A', 'L', 'E', 'S', 'C'],
+      ['U', 'W', 'I', 'L', 'R', 'G'],
+      ['P', 'A', 'C', 'E', 'M', 'D']
+    ];
+
+    this.newGame();
   }
 
-  return board;
-}
+  newGame() {
+    this.reset();
 
-function getRandomDiceValue(rng, dice) {
-  return dice[getRandomInt(rng, 6)];
-}
-
-function getRandomInt(rng, max) {
-  return Math.floor(rng() * Math.floor(max));
-}
-
-function drawBoard(board) {
-  $('#board > .row .boggle').each(function (index) {
-    $(this).children('span').each(function () {
-      $(this).text(board[index]);
-    })
-  });
-}
-
-const board = getRandomBoard(2, boggleDice);
-
-drawBoard(board);
-
-let word = [];
-
-let isMouseDown = false;
-
-$(document).mousedown(function () {
-  isMouseDown = true
-});
-
-$(document).mouseup(function () {
-  $('#board > .row .boggle').removeClass('selected');
-
-  console.log(word.join(''));
-  word = [];
-
-  isMouseDown = false
-});
-
-$('#board > .row .boggle').mousedown(function (index) {
-  $(this).addClass('selected');
-
-  const letter = $(this).text().trim().toUpperCase();
-  word.push(letter);
-});
-
-$('#board > .row .boggle').mouseenter(function (index) {
-  if (isMouseDown) {
-    $(this).addClass('selected');
-
-    const letter = $(this).text().trim().toUpperCase();
-    word.push(letter);
+    this.seed = Math.floor(Math.random() * 1000000001);
+    this.drawLetters(this.getRandomBoard(this.seed));
   }
-});
+
+  reset() {
+    this.word = [];
+    this.isMouseDown = false;
+
+    this.domElements.letters.removeClass('selected');
+  }
+
+  onMouseUp() {
+    if (this.word.length) {
+      this.addWordToHistory(this.word.join(''));
+    }
+
+    this.reset();
+  }
+
+  onMouseDown(event) {
+    this.isMouseDown = true;
+
+    $(event.currentTarget).addClass('selected');
+    this.word.push(this.getLetter(event.currentTarget));
+  }
 
 
+  onMouseEnter(event) {
+    if (this.isMouseDown) {
+      $(event.currentTarget).addClass('selected');
+      this.word.push(this.getLetter(event.currentTarget));
+    }
+  }
 
+  getLetter(element) {
+    return $(element).text().trim().toUpperCase();
+  }
 
+  addWordToHistory(word) {
+    console.log(word);
+  }
 
+  getRandomBoard(seed) {
+    const board = [];
+    const rng = Math.seed(seed);
 
+    for (const die of this.dice) {
+      const randomDieValue = die[Math.floor(rng() * Math.floor(6))];
+      board.push(randomDieValue);
+    }
 
+    return board;
+  }
 
+  drawLetters(letters) {
+    $(this.domElements.letters).each(function (index) {
+      $(this).children('span').each(function () {
+        $(this).text(letters[index]);
+      })
+    });
+  }
+}
 
-
-
-
-
+const boggle = new Boggle();
