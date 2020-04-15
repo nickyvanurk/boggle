@@ -106,9 +106,7 @@ class Boggle {
 
   drawLetters(letters) {
     $(this.domElements.letters).each(function (index) {
-      $(this).children('span').each(function () {
-        $(this).text(letters[index]);
-      })
+      $(this).children('span').text(letters[index]);
     });
   }
 }
