@@ -168,7 +168,7 @@ class Boggle {
   }
 
   isWordValid(word) {
-    return word.length;
+    return word.length >= 3;
   }
 
   isWordUsed(word) {
