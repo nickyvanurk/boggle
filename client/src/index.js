@@ -55,6 +55,8 @@ class Boggle {
   }
 
   newGame() {
+    this.words = [];
+
     this.reset();
 
     this.seed = Math.floor(Math.random() * 1000000001);
@@ -69,8 +71,11 @@ class Boggle {
   }
 
   onMouseUp() {
-    if (this.word.length) {
-      this.addWordToScoreBox(this.word.join(''));
+    const word = this.word.join('');
+
+    if (this.isWordValid(word) && !this.isWordUsed(word)) {
+      this.addWordToScoreBox(word);
+      this.words.push(word);
     }
 
     this.reset();
@@ -160,6 +165,14 @@ class Boggle {
 
   addLetterToWord(letterElement) {
     this.word.push($(letterElement).text().trim().toUpperCase());
+  }
+
+  isWordValid(word) {
+    return word.length;
+  }
+
+  isWordUsed(word) {
+    return this.words.indexOf(word) > -1;
   }
 }
 
