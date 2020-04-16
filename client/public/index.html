@@ -5,125 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Boggle</title>
 
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        user-select: none;
-      }
-
-      #boggle-container {
-        display: flex;
-        flex-direction: column;
-        width: 490px;
-        margin: 0 auto;
-      }
-
-      #board {
-        border: 5px solid #FFCA08;
-        background-color: #398BD4;
-        padding: 5px;
-        margin-top: 20px;
-      }
-
-      .row {
-        display: flex;
-        text-align:center;
-        flex-direction:row;
-        padding: 5px;
-      }
-
-      .boggle:hover {
-        cursor: pointer;
-      }
-
-      .boggle {
-        width: 80px;
-        height: 80px;
-        border-radius: 5px;
-        background-color: #ffffff;
-        box-shadow: -4px 2px 8px 1px rgba(0,0,0,0.69);
-        flex:1 1 auto;
-        margin:5px;
-      }
-
-      .boggle.selected {
-        background-color: #ACCEEC;
-      }
-
-      .boggle span {
-        font-weight: bold;
-        display: block;
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
     <div id="boggle-container">
-      <div id="board">
-        <div class="row">
-          <div class="boggle">
-            <span></span>
+      <img src="./img/logo.png" alt="Logo" class="logo">
+      <div class="grid-container">
+        <div class="score-box">
+          <div class="word-list">
+            <div class="words">
+              <h2>Word</h2>
+              <div class="word">Lorem</div>
+              <div class="word">Ipsum</div>
+              <div class="word">Dolor</div>
+            </div>
+            <div class="scores">
+              <h2>Score</h2>
+              <div class="score">5</div>
+              <div class="score">7</div>
+              <div class="score">4</div>
+            </div>
           </div>
-          <div class="boggle">
-            <span></span>
-          </div>
-          <div class="boggle">
-            <span></span>
-          </div>
-          <div class="boggle">
-            <span></span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="boggle">
-            <span></span>
-          </div>
-          <div class="boggle">
-            <span></span>
-          </div>
-          <div class="boggle">
-            <span></span>
-          </div>
-          <div class="boggle">
-            <span></span>
+          <div class="total-score">
+            <h2>Total score</h2>
+            <span>0</span>
           </div>
         </div>
-        <div class="row">
-          <div class="boggle">
-            <span></span>
+        <div id="board">
+          <div class="row">
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
           </div>
-          <div class="boggle">
-            <span></span>
+          <div class="row">
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
           </div>
-          <div class="boggle">
-            <span></span>
+          <div class="row">
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
           </div>
-          <div class="boggle">
-            <span></span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="boggle">
-            <span></span>
-          </div>
-          <div class="boggle">
-            <span></span>
-          </div>
-          <div class="boggle">
-            <span></span>
-          </div>
-          <div class="boggle">
-            <span></span>
+          <div class="row">
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
+            <div class="boggle">
+              <span></span>
+            </div>
           </div>
         </div>
       </div>

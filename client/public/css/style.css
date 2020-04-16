@@ -1,0 +1,137 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  user-select: none;
+  background-color: #F57921;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #18252e;
+}
+
+h2 {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  display: inline;
+  color: #616161;
+}
+
+#boggle-container {
+  width: 648px;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1rem;
+  margin-top: 1rem;
+}
+
+#word-history {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  background: white;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.score-box {
+  border-radius: 5px;
+  border: solid 1px #EEEEEE;
+  padding: 20px;
+  background: white;
+  text-transform: uppercase;
+}
+
+.word-list {
+  height: 323px;
+  width: 100%;
+}
+
+.words {
+  width: 50%;
+  float: left;
+}
+
+.word,
+.score {
+  padding-top: 15px;
+}
+
+.scores {
+  width: 50%;
+  float: left;
+  text-align: right;
+}
+
+.total-score {
+  border-top: 1px solid #E0E0E0;
+  padding-top: 25px;
+  width: 100%;
+}
+
+.total-score h2 {
+  text-align: left;
+}
+
+.total-score span {
+  text-align: right;
+  float: right;
+  position: relative;
+  top: -5px;
+  font-size: 1.5rem;
+}
+
+#board {
+  border: 5px solid #FFCA08;
+  background-color: #398BD4;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.row {
+  display: flex;
+  text-align:center;
+  flex-direction:row;
+  padding: 5px;
+}
+
+.boggle:hover {
+  cursor: pointer;
+}
+
+.boggle {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: -4px 2px 8px 1px rgba(0,0,0,0.69);
+  flex:1 1 auto;
+  margin:5px;
+}
+
+.boggle.selected {
+  background-color: #ACCEEC;
+}
+
+.boggle span {
+  font-weight: bold;
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
