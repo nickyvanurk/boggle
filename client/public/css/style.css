@@ -65,17 +65,21 @@ h2 {
 .words {
   width: 50%;
   float: left;
-}
-
-.word,
-.score {
-  padding-top: 15px;
+  height: 323px;
+  overflow: hidden;
 }
 
 .scores {
   width: 50%;
   float: left;
   text-align: right;
+  height: 323px;
+  overflow: hidden;
+}
+
+.word,
+.score {
+  padding-top: 14px;
 }
 
 .total-score {

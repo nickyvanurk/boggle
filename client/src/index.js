@@ -5,9 +5,9 @@ import $ from 'jquery';
 //    Create board generator that takes optional seed argument
 //    currentWord array filled with mouseclick/hover
 //    submit word on mouse release
+//    Display found word
 
 // TODO:
-//    Display found word
 //    Calculate score for word
 //    Add score and display score
 //    3 minute timer
@@ -18,8 +18,15 @@ class Boggle {
   constructor() {
     this.domElements = {
       document: $(document),
-      letters: $('#board > .row .boggle')
+      letters: $('#board > .row .boggle'),
+      wordsWrapper: $('.words'),
+      words:  $('.word'),
+      scoresWrapper: $('.scores'),
+      scores: $('.score')
     };
+
+    this.wordInDom = 0;
+    this.maxWordsInDom = 9;
 
     this.domElements.document.mouseup(this.onMouseUp.bind(this));
     this.domElements.letters.mousedown(this.onMouseDown.bind(this));
@@ -63,7 +70,7 @@ class Boggle {
 
   onMouseUp() {
     if (this.word.length) {
-      this.addWordToHistory(this.word.join(''));
+      this.addWordToScoreBox(this.word.join(''));
     }
 
     this.reset();
@@ -88,8 +95,32 @@ class Boggle {
     return $(element).text().trim().toUpperCase();
   }
 
-  addWordToHistory(word) {
-    console.log(word);
+  addWordToScoreBox(word) {
+    this.domElements.wordsWrapper.append(`
+      <div class="word">${word}</div>
+    `);
+
+    const score = Math.floor(Math.random() * 10);
+
+    this.domElements.scoresWrapper.append(`
+      <div class="score">${score}</div>
+    `);
+
+    this.wordInDom++;
+
+    if (this.wordInDom >= this.maxWordsInDom) {
+      this.removeWordFromScoreBox();
+
+      this.wordInDom = this.maxWordsInDom;
+    }
+  }
+
+  removeWordFromScoreBox() {
+    this.domElements.words.first().remove();
+    this.domElements.words = $(`.${this.domElements.words.first().attr('class')}`);
+
+    this.domElements.scores.first().remove();
+    this.domElements.scores = $(`.${this.domElements.scores.first().attr('class')}`);
   }
 
   getRandomBoard(seed) {
