@@ -6,10 +6,10 @@ import $ from 'jquery';
 //    currentWord array filled with mouseclick/hover
 //    submit word on mouse release
 //    Display found word
-
-// TODO:
 //    Calculate score for word
 //    Add score and display score
+
+// TODO:
 //    3 minute timer
 //    Add player + score to highscore by order
 //    Show only top 10 highscore
@@ -22,7 +22,8 @@ class Boggle {
       wordsWrapper: $('.words'),
       words:  $('.word'),
       scoresWrapper: $('.scores'),
-      scores: $('.score')
+      scores: $('.score'),
+      totalScore: $('.total-score span')
     };
 
     this.wordInDom = 0;
@@ -74,7 +75,11 @@ class Boggle {
     const word = this.word.join('');
 
     if (this.isWordValid(word) && !this.isWordUsed(word)) {
-      this.addWordToScoreBox(word);
+      const score = this.getWordScore(word);
+
+      this.addWordToScoreBox(word, score);
+      this.incrementTotalScore(score);
+
       this.words.push(word);
     }
 
@@ -109,16 +114,9 @@ class Boggle {
     return $(element).text().trim().toUpperCase();
   }
 
-  addWordToScoreBox(word) {
-    this.domElements.wordsWrapper.append(`
-      <div class="word">${word}</div>
-    `);
-
-    const score = Math.floor(Math.random() * 10);
-
-    this.domElements.scoresWrapper.append(`
-      <div class="score">${score}</div>
-    `);
+  addWordToScoreBox(word, score) {
+    this.domElements.wordsWrapper.append(`<div class="word">${word}</div>`);
+    this.domElements.scoresWrapper.append(`<div class="score">${score}</div>`);
 
     this.wordInDom++;
 
@@ -173,6 +171,18 @@ class Boggle {
 
   isWordUsed(word) {
     return this.words.indexOf(word) > -1;
+  }
+
+  getWordScore(word) {
+    return word.length >= 8 ? 11 :
+           word.length >= 7 ? 5 :
+           word.length >= 6 ? 3 :
+           word.length >= 5 ? 2 : 1;
+  }
+
+  incrementTotalScore(score) {
+    let totalScore = +this.domElements.totalScore.text();
+    this.domElements.totalScore.text(totalScore + score);
   }
 }
 
