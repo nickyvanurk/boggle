@@ -79,15 +79,24 @@ class Boggle {
   onMouseDown(event) {
     this.isMouseDown = true;
 
-    $(event.currentTarget).addClass('selected');
-    this.word.push(this.getLetter(event.currentTarget));
+    const letterElement = event.currentTarget;
+
+    if (!this.isElementSelected(letterElement)) {
+      this.selectElement(letterElement);
+      this.addLetterToWord(letterElement);
+    }
   }
 
 
   onMouseEnter(event) {
     if (this.isMouseDown) {
-      $(event.currentTarget).addClass('selected');
-      this.word.push(this.getLetter(event.currentTarget));
+
+      const letterElement = event.currentTarget;
+
+      if (!this.isElementSelected(letterElement)) {
+        this.selectElement(letterElement);
+        this.addLetterToWord(letterElement);
+      }
     }
   }
 
@@ -139,6 +148,18 @@ class Boggle {
     $(this.domElements.letters).each(function (index) {
       $(this).children('span').text(letters[index]);
     });
+  }
+
+  isElementSelected(element) {
+    return $(element).hasClass('selected')
+  }
+
+  selectElement(element) {
+    $(element).addClass('selected');
+  }
+
+  addLetterToWord(letterElement) {
+    this.word.push($(letterElement).text().trim().toUpperCase());
   }
 }
 
