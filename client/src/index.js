@@ -19,15 +19,18 @@ class Boggle {
     this.domElements = {
       document: $(document),
       letters: $('#board > .row .boggle'),
-      wordsWrapper: $('.words'),
-      words:  $('.word'),
-      scoresWrapper: $('.scores'),
-      scores: $('.score'),
-      totalScore: $('.total-score span')
+      wordsWrapper: $('.score-box .words'),
+      words:  $('.score-box .word'),
+      scoresWrapper: $('.score-box .scores'),
+      scores: $('.score-box .score'),
+      totalScore: $('.score-box .total-score span'),
+      timer: $('.timer')
     };
 
     this.wordInDom = 0;
     this.maxWordsInDom = 9;
+
+    this.gameOverTimeoutInSeconds = 6;
 
     this.domElements.document.mouseup(this.onMouseUp.bind(this));
     this.domElements.letters.mousedown(this.onMouseDown.bind(this));
@@ -62,6 +65,21 @@ class Boggle {
 
     this.seed = Math.floor(Math.random() * 1000000001);
     this.drawLetters(this.getRandomBoard(this.seed));
+
+    console.log(';');
+
+    this.domElements.timer.width('0%');
+
+    clearTimeout(this.gameOverTimeout);
+    this.gameOverTimeout = setTimeout(this.newGame.bind(this), this.gameOverTimeoutInSeconds * 1000);
+
+    this.currentTime = Date.now();
+    clearTimeout(this.gameTimer);
+    this.gameTimer = setInterval(() => {
+      const elapsedTimeInSeconds = (Date.now() - this.currentTime) / 1000;
+      const width = 100 / this.gameOverTimeoutInSeconds * elapsedTimeInSeconds;
+      this.domElements.timer.width(`${width}%`);
+    }, 1000);
   }
 
   reset() {
@@ -129,10 +147,10 @@ class Boggle {
 
   removeWordFromScoreBox() {
     this.domElements.words.first().remove();
-    this.domElements.words = $(`.${this.domElements.words.first().attr('class')}`);
+    this.domElements.words = $(`.${this.domElements.words.first().attr('class').split(' ')[0]}`);
 
     this.domElements.scores.first().remove();
-    this.domElements.scores = $(`.${this.domElements.scores.first().attr('class')}`);
+    this.domElements.scores = $(`.${this.domElements.scores.first().attr('class').split(' ')[0]}`);
   }
 
   getRandomBoard(seed) {
