@@ -16,18 +16,22 @@ import $ from 'jquery';
 
 class Boggle {
   constructor() {
+    this.domSelectors = {
+      words: '.score-box .word',
+      scores: '.score-box .score',
+    };
+
     this.domElements = {
       document: $(document),
       letters: $('#board > .row .boggle'),
       wordsWrapper: $('.score-box .words'),
-      words:  $('.score-box .word'),
+      words:  $(this.domSelectors.words),
       scoresWrapper: $('.score-box .scores'),
-      scores: $('.score-box .score'),
+      scores: $(this.domSelectors.scores),
       totalScore: $('.score-box .total-score span'),
       timer: $('.timer')
     };
 
-    this.wordInDom = 0;
     this.maxWordsInDom = 9;
 
     this.gameOverTimeoutInSeconds = 6;
@@ -60,33 +64,39 @@ class Boggle {
 
   newGame() {
     this.words = [];
+    this.wordInDom = 0;
 
-    this.reset();
+    this.resetBoard();
+    this.resetDom();
 
     this.seed = Math.floor(Math.random() * 1000000001);
     this.drawLetters(this.getRandomBoard(this.seed));
 
-    console.log(';');
-
-    this.domElements.timer.width('0%');
-
     clearTimeout(this.gameOverTimeout);
+    clearTimeout(this.gameTimer);
+
     this.gameOverTimeout = setTimeout(this.newGame.bind(this), this.gameOverTimeoutInSeconds * 1000);
 
     this.currentTime = Date.now();
-    clearTimeout(this.gameTimer);
     this.gameTimer = setInterval(() => {
       const elapsedTimeInSeconds = (Date.now() - this.currentTime) / 1000;
       const width = 100 / this.gameOverTimeoutInSeconds * elapsedTimeInSeconds;
       this.domElements.timer.width(`${width}%`);
-    }, 1000);
+    }, 16);
   }
 
-  reset() {
+  resetBoard() {
     this.word = [];
     this.isMouseDown = false;
 
     this.domElements.letters.removeClass('selected');
+  }
+
+  resetDom() {
+    $(this.domSelectors.words).not(':first').remove();
+    $(this.domSelectors.scores).not(':first').remove();
+    this.domElements.totalScore.text(0);
+    this.domElements.timer.width('0%');
   }
 
   onMouseUp() {
@@ -101,7 +111,7 @@ class Boggle {
       this.words.push(word);
     }
 
-    this.reset();
+    this.resetBoard();
   }
 
   onMouseDown(event) {
