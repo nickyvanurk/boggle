@@ -8,9 +8,9 @@ import $ from 'jquery';
 //    Display found word
 //    Calculate score for word
 //    Add score and display score
+//    3 minute timer
 
 // TODO:
-//    3 minute timer
 //    Add player + score to highscore by order
 //    Show only top 10 highscore
 
@@ -29,16 +29,20 @@ class Boggle {
       scoresWrapper: $('.score-box .scores'),
       scores: $(this.domSelectors.scores),
       totalScore: $('.score-box .total-score span'),
-      timer: $('.timer')
+      timer: $('.timer'),
+      overlay: $('.overlay'),
+      userModal: $('#username-modal'),
+      usernameInput: $('#username-input'),
     };
 
     this.maxWordsInDom = 9;
-
     this.gameOverTimeoutInSeconds = 6;
+    this.isPlaying = false;
 
     this.domElements.document.mouseup(this.onMouseUp.bind(this));
     this.domElements.letters.mousedown(this.onMouseDown.bind(this));
     this.domElements.letters.mouseenter(this.onMouseEnter.bind(this));
+    this.domElements.usernameInput.keypress(this.onKeypress.bind(this));
 
     this.dice = [
       ['R', 'I', 'F', 'O', 'B', 'X'],
@@ -58,8 +62,6 @@ class Boggle {
       ['U', 'W', 'I', 'L', 'R', 'G'],
       ['P', 'A', 'C', 'E', 'M', 'D']
     ];
-
-    this.newGame();
   }
 
   newGame() {
@@ -83,6 +85,8 @@ class Boggle {
       const width = 100 / this.gameOverTimeoutInSeconds * elapsedTimeInSeconds;
       this.domElements.timer.width(`${width}%`);
     }, 16);
+
+    this.isPlaying = true;
   }
 
   resetBoard() {
@@ -100,6 +104,8 @@ class Boggle {
   }
 
   onMouseUp() {
+    if (!this.isPlaying) return;
+
     const word = this.word.join('');
 
     if (this.isWordValid(word) && !this.isWordUsed(word)) {
@@ -115,6 +121,8 @@ class Boggle {
   }
 
   onMouseDown(event) {
+    if (!this.isPlaying) return;
+
     this.isMouseDown = true;
 
     const letterElement = event.currentTarget;
@@ -125,8 +133,9 @@ class Boggle {
     }
   }
 
-
   onMouseEnter(event) {
+    if (!this.isPlaying) return;
+
     if (this.isMouseDown) {
 
       const letterElement = event.currentTarget;
@@ -136,6 +145,34 @@ class Boggle {
         this.addLetterToWord(letterElement);
       }
     }
+  }
+
+  onKeypress(event) {
+    if (this.isPlaying) return;
+
+    if (event.key === 'Enter') {
+      const {overlay, userModal, usernameInput} = this.domElements;
+
+      overlay.hide();
+      userModal.hide();
+
+      this.username = usernameInput.val();
+
+      usernameInput.val('');
+
+      this.newGame();
+    }
+  }
+
+  getUsername({ usernameInput }) {
+    const username = usernameInput.val();
+    usernameInput.val('');
+    return username;
+  }
+
+  hideUserModal({ overlay, userModal }) {
+    overlay.hide();
+    userModal.hide();
   }
 
   getLetter(element) {
