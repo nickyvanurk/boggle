@@ -19,6 +19,12 @@ class Boggle {
     this.domSelectors = {
       words: '.score-box .word',
       scores: '.score-box .score',
+      highscore: {
+        usernamesWrapper: '.high-score-box .usernames',
+        usernames: '.high-score-box .username',
+        scoresWrapper: '.high-score-box .scores',
+        scores: '.high-score-box .score',
+      }
     };
 
     this.domElements = {
@@ -34,8 +40,8 @@ class Boggle {
       userModal: $('#username-modal'),
       usernameInput: $('#username-input'),
       highscore: {
-        usernames: $('.high-score-box .usernames'),
-        scores: $('.high-score-box .scores')
+        usernamesWrapper: $(this.domSelectors.highscore.usernamesWrapper),
+        scoresWrapper: $(this.domSelectors.highscore.scoresWrapper)
       }
     };
 
@@ -73,6 +79,7 @@ class Boggle {
   newGame() {
     this.words = [];
     this.wordInDom = 0;
+    this.totalScore = 0;
 
     this.resetBoard();
     this.resetDom();
@@ -96,15 +103,20 @@ class Boggle {
   }
 
   gameOver() {
-    this.highscore[this.username] = this.totalScore;
+    if (this.totalScore > this.highscore[this.username]) {
+      this.highscore[this.username] = this.totalScore;
 
-    this.domElements.highscore.usernames.append(`
-      <div class="username">${this.username}</div>
-    `);
+      $(this.domSelectors.highscore.usernames).not(':first').remove();
+      $(this.domSelectors.highscore.scores).not(':first').remove();
 
-    this.domElements.highscore.scores.append(`
-      <div class="score">${this.totalScore}</div>
-    `);
+      this.domElements.highscore.usernamesWrapper.append(`
+        <div class="username">${this.username}</div>
+      `);
+
+      this.domElements.highscore.scoresWrapper.append(`
+        <div class="score">${this.totalScore}</div>
+      `);
+    }
 
     this.newGame();
   }
@@ -179,6 +191,8 @@ class Boggle {
       this.username = usernameInput.val();
 
       usernameInput.val('');
+
+      this.highscore[this.username] = this.totalScore;
 
       this.newGame();
     }
