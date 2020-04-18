@@ -33,11 +33,17 @@ class Boggle {
       overlay: $('.overlay'),
       userModal: $('#username-modal'),
       usernameInput: $('#username-input'),
+      highscore: {
+        usernames: $('.high-score-box .usernames'),
+        scores: $('.high-score-box .scores')
+      }
     };
 
     this.maxWordsInDom = 9;
     this.gameOverTimeoutInSeconds = 6;
     this.isPlaying = false;
+    this.totalScore = 0;
+    this.highscore = {};
 
     this.domElements.document.mouseup(this.onMouseUp.bind(this));
     this.domElements.letters.mousedown(this.onMouseDown.bind(this));
@@ -77,7 +83,7 @@ class Boggle {
     clearTimeout(this.gameOverTimeout);
     clearTimeout(this.gameTimer);
 
-    this.gameOverTimeout = setTimeout(this.newGame.bind(this), this.gameOverTimeoutInSeconds * 1000);
+    this.gameOverTimeout = setTimeout(this.gameOver.bind(this), this.gameOverTimeoutInSeconds * 1000);
 
     this.currentTime = Date.now();
     this.gameTimer = setInterval(() => {
@@ -87,6 +93,20 @@ class Boggle {
     }, 16);
 
     this.isPlaying = true;
+  }
+
+  gameOver() {
+    this.highscore[this.username] = this.totalScore;
+
+    this.domElements.highscore.usernames.append(`
+      <div class="username">${this.username}</div>
+    `);
+
+    this.domElements.highscore.scores.append(`
+      <div class="score">${this.totalScore}</div>
+    `);
+
+    this.newGame();
   }
 
   resetBoard() {
@@ -246,8 +266,8 @@ class Boggle {
   }
 
   incrementTotalScore(score) {
-    let totalScore = +this.domElements.totalScore.text();
-    this.domElements.totalScore.text(totalScore + score);
+    this.totalScore += score;
+    this.domElements.totalScore.text(this.totalScore);
   }
 }
 
