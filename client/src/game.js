@@ -6,21 +6,23 @@ export default class Game {
   constructor() {
     this.gameDurationInSeconds = 2;
 
+    this.playername = '';
     this.highscores = [];
 
     this.emitter = new EventEmitter();
 
+    this.emitter.on('game-start', this.onStart.bind(this));
     this.emitter.on('game-over', this.onGameOver.bind(this));
     this.emitter.on('game-set-player-name', this.onSetPlayerName.bind(this));
 
     this.ui = new Ui(this.emitter);
     this.boggle = new Boggle(this.emitter, this.gameDurationInSeconds, 60);
 
-    this.start();
+    this.emitter.emit('ui-show-player-name-modal');
   }
 
   start() {
-    this.emitter.emit('ui-show-player-name-modal');
+    this.play();
   }
 
   play() {
@@ -32,20 +34,24 @@ export default class Game {
     this.boggle.play(seed);
   }
 
-  reset() {
-    this.playername = '';
+  onStart() {
+    this.emitter.emit('ui-hide-game-over-modal');
+
+    this.start();
   }
 
   onGameOver(score) {
     const playerHighscore = this.highscores.find(x => x.playerName === this.playerName);
 
-    if (playerHighscore === undefined && score > 0) {
-      this.highscores.push({ playerName: this.playerName, score });
+    if (playerHighscore === undefined) {
+      if (score > 0) {
+        this.highscores.push({ playerName: this.playerName, score });
 
-      this.highscores.sort((a, b) => {
-        return a.score > b.score ? -1 :
-               a.score < b.score ? 1 : 0;
-      });
+        this.highscores.sort((a, b) => {
+          return a.score > b.score ? -1 :
+                a.score < b.score ? 1 : 0;
+        });
+      }
     } else if (score > playerHighscore.score) {
       playerHighscore.score = score;
 
@@ -55,10 +61,7 @@ export default class Game {
       });
     }
 
-    // show game over modal
-
-    this.reset();
-    this.start();
+    this.emitter.emit('ui-show-game-over-modal', score);
   }
 
   onSetPlayerName(playerName) {

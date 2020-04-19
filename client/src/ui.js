@@ -6,6 +6,10 @@ export default class Ui {
 
     this.emitter.on('ui-show-player-name-modal', this.onShowPlayerNameModal.bind(this));
     this.emitter.on('ui-hide-player-name-modal', this.onHidePlayerNameModal.bind(this));
+
+    this.emitter.on('ui-show-game-over-modal', this.onShowGameOverModal.bind(this));
+    this.emitter.on('ui-hide-game-over-modal', this.onHideGameOverModal.bind(this));
+
     this.emitter.on('ui-draw-board', this.onDrawBoard.bind(this));
     this.emitter.on('ui-update-time-bar', this.onUpdateTimeBar.bind(this));
 
@@ -29,6 +33,10 @@ export default class Ui {
       overlay: '.overlay',
       playerNameModal: '#username-modal',
       playerNameInput: '#username-input',
+
+      gameOverModal: '#game-over-modal',
+      finalScore: '#game-over-modal .final-score',
+      restartButton: '#game-over-modal .restart',
 
       timeBar: '.timer',
 
@@ -75,6 +83,25 @@ export default class Ui {
     $(this.domSelectors.playerNameInput).unbind();
   }
 
+  onShowGameOverModal(score) {
+    $(this.domSelectors.overlay).show();
+    $(this.domSelectors.gameOverModal).show();
+
+    $(this.domSelectors.finalScore).html(`
+      Total Score: <span>${score}</span>
+    `);
+
+    $(this.domSelectors.restartButton).click((event) => {
+      this.emitter.emit('game-start');
+    });
+  }
+
+  onHideGameOverModal() {
+    $(this.domSelectors.overlay).hide();
+    $(this.domSelectors.gameOverModal).hide();
+    $(this.domSelectors.restartButton).unbind();
+  }
+
   onDrawBoard(board) {
     $(this.domSelectors.letters).each(function (index) {
         $(this).children('span').text(board[index]);
@@ -110,6 +137,9 @@ export default class Ui {
   }
 
   onUnbindMouseEventHandlers() {
+    this.isMouseDown = false;
+
+    $('body').unbind();
     $(this.domSelectors.letters).unbind();
   }
 
@@ -139,7 +169,7 @@ export default class Ui {
       $(this.domSelectors.words).first().remove();
       $(this.domSelectors.scores).first().remove();
 
-      this.wordInDom = this.maxWords;
+      this.wordsInDom = this.maxWords;
     }
   }
 
@@ -172,6 +202,6 @@ export default class Ui {
     $(this.domSelectors.words).first().remove();
     $(this.domSelectors.scores).first().remove();
 
-    this.wordInDom = 0;
+    this.wordsInDom = 0;
   }
 }

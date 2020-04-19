@@ -54,6 +54,7 @@ export default class Boggle {
       clearTimeout(this.boggleTimer);
 
       this.emitter.emit('ui-unbind-mouse-event-handlers');
+      this.emitter.emit('ui-deselect-letters');
       this.emitter.emit('game-over', this.getScore());
     }, this.gameDurationInSeconds * 1000);
   }
