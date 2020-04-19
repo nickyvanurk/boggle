@@ -9,5 +9,7 @@
   "keywords": [],
   "author": "Nicky van Urk",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "EventEmitter": "^1.0.0"
+  }
 }

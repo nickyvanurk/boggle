@@ -20,6 +20,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "EventEmitter": "^1.0.0",
     "jquery": "^3.5.0"
   }
 }
