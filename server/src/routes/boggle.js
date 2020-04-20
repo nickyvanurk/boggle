@@ -5,33 +5,43 @@ import validator from 'validator';
 const router = new express.Router();
 
 router.get('/getboggleboard', ({ query }, res) => {
-  if (!query.id) {
-    const id = Boggle.getRandomId();
+  const { id } = query;
+
+  if (!id) {
+    const boardId = Boggle.getRandomId();
 
     return res.send({
-      id: id,
-      board: Boggle.getRandomBoard(id)
+      id: boardId,
+      board: Boggle.getRandomBoard(boardId)
     });
   }
 
-  if (!validator.isInt(query.id, { min: 0, max: 1000000000000 })) {
-    return res.send({
-      error: 'Invalid id'
-    });
+  if (!validator.isInt(id, { min: 0, max: 1000000000000 })) {
+    return res.send({ error: 'Invalid id' });
   }
 
   res.send({
-    id: query.id,
-    board: Boggle.getRandomBoard(query.id)
+    id: id,
+    board: Boggle.getRandomBoard(id)
   });
 });
 
 router.get('/isvalidword', ({ query }, res) => {
-  if (!query.id || !query.word) {
+  const { id, word } = query;
+
+  if (!id || !word) {
     res.send({ error: 'You must provide a board id and word' });
   }
 
-  res.send('isvalidword');
+  if (!validator.isInt(id, { min: 0, max: 1000000000000 })) {
+    return res.send({ error: 'Invalid id' });
+  }
+
+  if (!validator.isAlpha(word) || !validator.isLength(word, { min: 3, max: 16 })) {
+    return res.send({ error: 'Invalid word' });
+  }
+
+  res.send({ isValid: Boggle.isValidWord(id, word) });
 });
 
 router.get('/scoreword', ({ query }, res) => {

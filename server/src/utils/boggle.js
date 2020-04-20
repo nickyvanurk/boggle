@@ -35,4 +35,8 @@ export default class Boggle {
 
     return board;
   }
+
+  static isValidWord(id, word) {
+    return true;
+  }
 }
