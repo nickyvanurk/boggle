@@ -4,7 +4,7 @@ import Ui from './ui';
 
 export default class Game {
   constructor() {
-    this.gameDurationInSeconds = 2;
+    this.gameDurationInSeconds = 180;
 
     this.playername = '';
     this.highscores = [];
@@ -29,9 +29,7 @@ export default class Game {
     this.emitter.emit('ui-hide-player-name-modal');
     this.emitter.emit('ui-display-highscores', this.highscores)
 
-    const seed = Math.floor(Math.random() * 1000000001);
-
-    this.boggle.play(seed);
+    this.boggle.start();
   }
 
   onStart() {

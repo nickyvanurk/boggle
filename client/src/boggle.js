@@ -1,29 +1,10 @@
-import './math';
+import $ from 'jquery';
 
 export default class Boggle {
   constructor(emitter, gameDurationInSeconds, fps) {
     this.emitter = emitter;
     this.gameDurationInSeconds = gameDurationInSeconds;
     this.fps = fps;
-
-    this.dice = [
-      ['R', 'I', 'F', 'O', 'B', 'X'],
-      ['I', 'F', 'E', 'H', 'E', 'Y'],
-      ['D', 'E', 'N', 'O', 'W', 'S'],
-      ['U', 'T', 'O', 'K', 'N', 'D'],
-      ['H', 'M', 'S', 'R', 'A', 'O'],
-      ['L', 'U', 'P', 'E', 'T', 'S'],
-      ['A', 'C', 'I', 'T', 'O', 'A'],
-      ['Y', 'L', 'G', 'K', 'U', 'E'],
-      ['Q', 'B', 'M', 'J', 'O', 'A'],
-      ['E', 'H', 'I', 'S', 'P', 'N'],
-      ['V', 'E', 'T', 'I', 'G', 'N'],
-      ['B', 'A', 'L', 'I', 'Y', 'T'],
-      ['E', 'Z', 'A', 'V', 'N', 'D'],
-      ['R', 'A', 'L', 'E', 'S', 'C'],
-      ['U', 'W', 'I', 'L', 'R', 'G'],
-      ['P', 'A', 'C', 'E', 'M', 'D']
-    ];
 
     this.boardWidth = 4;
 
@@ -33,10 +14,18 @@ export default class Boggle {
     this.reset();
   }
 
-  play(seed) {
+  start() {
     this.reset();
 
-    this.board = this.getRandomBoard(seed);
+    $.getJSON('//localhost:3000/getboggleboard', (data) => {
+      this.id = data.id;
+      this.board = data.board;
+
+      this.play();
+    });
+  }
+
+  play() {
     this.emitter.emit('ui-draw-board', this.board);
 
     this.emitter.emit('ui-bind-mouse-event-handlers');
@@ -80,15 +69,22 @@ export default class Boggle {
   onEndWord() {
     const word = this.getWord(this.selectedLetters);
 
-    if (this.isValidWord(word)) {
-      const wordScore = this.getWordScore(word);
+    $.getJSON('//localhost:3000/isvalidword', {
+      id: this.id,
+      selection: this.selectedLetters
+    }, (data) => {
+      if (!data.valid || !this.isValidWord(word)) return;
 
-      this.foundWords.push(word);
-      this.score += wordScore;
+      $.getJSON('//localhost:3000/getwordscore', { word }, (data) => {
+        const wordScore = data.score;
 
-      this.emitter.emit('ui-display-word', word, wordScore);
-      this.emitter.emit('ui-display-score', this.score);
-    }
+        this.foundWords.push(word);
+        this.score += wordScore;
+
+        this.emitter.emit('ui-display-word', word, wordScore);
+        this.emitter.emit('ui-display-score', this.score);
+      });
+    });
 
     this.selectedLetters = [];
 
@@ -113,13 +109,9 @@ export default class Boggle {
   }
 
   isIndexOutOfBounds({ x, y }, index) {
-    return (index < 0 || index >= this.dice.length) ||
+    return (index < 0 || index >= this.boardWidth*this.boardWidth) ||
            (x === 1 && index % this.boardWidth === 0) ||
            (x === -1 && index % this.boardWidth === 3);
-  }
-
-  isValidWord(word) {
-    return word.length >= 3 && !this.foundWords.includes(word);
   }
 
   getScore() {
@@ -136,22 +128,7 @@ export default class Boggle {
     return word.join('');
   }
 
-  getRandomBoard(seed) {
-    const board = [];
-    const rng = Math.seed(seed);
-
-    for (const die of this.dice) {
-      const randomDieValue = die[Math.floor(rng() * Math.floor(6))];
-      board.push(randomDieValue);
-    }
-
-    return board;
-  }
-
-  getWordScore(word) {
-    return word.length >= 8 ? 11 :
-           word.length >= 7 ? 5 :
-           word.length >= 6 ? 3 :
-           word.length >= 5 ? 2 : 1;
+  isValidWord(word) {
+    return word.length >= 3 && !this.foundWords.includes(word);
   }
 }
