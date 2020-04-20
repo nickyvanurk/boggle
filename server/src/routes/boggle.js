@@ -14,7 +14,7 @@ router.get('/getboggleboard', ({ query }, res) => {
     });
   }
 
-  if (!validator.isInt(query.id)) {
+  if (!validator.isInt(query.id, { min: 0, max: 1000000000000 })) {
     return res.send({
       error: 'Invalid id'
     });
