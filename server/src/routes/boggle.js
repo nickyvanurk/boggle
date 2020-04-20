@@ -47,15 +47,21 @@ router.get('/isvalidword', ({ query }, res) => {
     }
   }
 
-  res.send({ isValid: Boggle.isValidWord(id, selection) });
+  res.send({ valid: Boggle.isValidWord(id, selection) });
 });
 
-router.get('/scoreword', ({ query }, res) => {
-  if (!query.word) {
+router.get('/getwordscore', ({ query }, res) => {
+  const { word } = query;
+
+  if (!word) {
     res.send({ error: 'You must provide a word' });
   }
 
-  res.send('scoreword');
+  if (!validator.isAlpha(word) || !validator.isLength(word, { min: 3, max: 16 })) {
+    return res.send({ error: 'Invalid word' });
+  }
+
+  res.send({ score: Boggle.getWordScore(word) });
 });
 
 export default router;

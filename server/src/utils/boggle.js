@@ -60,6 +60,13 @@ export default class Boggle {
     return word.join('').toLowerCase();
   }
 
+  static getWordScore(word) {
+    return word.length >= 8 ? 11 :
+           word.length >= 7 ? 5 :
+           word.length >= 6 ? 3 :
+           word.length >= 5 ? 2 : 1;
+  }
+
   static isValidSelection(selection) {
     const validSelection = [];
 
