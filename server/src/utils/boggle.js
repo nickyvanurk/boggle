@@ -1,4 +1,5 @@
 import { randomNumberGenerator } from './math';
+import fs from 'fs';
 
 export default class Boggle {
   static dice = [
@@ -36,7 +37,35 @@ export default class Boggle {
     return board;
   }
 
-  static isValidWord(id, word) {
-    return true;
+  static isValidWord(id, selection) {
+    const board = Boggle.getRandomId(id);
+
+    const word = Boggle.getWord(board, selection);
+
+    let foundWord = false;
+
+    fs.readFile(__dirname + '/../dictionaries/dutch.txt', (error, data) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      if (data.includes(`${word}\n`)) {
+        foundWord = true;
+        return;
+      }
+    });
+
+    return foundWord;
+  }
+
+  static getWord(board, selection) {
+    const word = [];
+
+    for (const index of selection) {
+      word.push(board[index]);
+    }
+
+    return word.join('');
   }
 }
