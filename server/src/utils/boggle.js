@@ -38,6 +38,8 @@ export default class Boggle {
   }
 
   static isValidWord(id, selection) {
+    if (!this.isValidSelection(selection)) return false;
+
     const board = Boggle.getRandomBoard(id);
     const word = Boggle.getWord(board, selection);
 
@@ -56,5 +58,43 @@ export default class Boggle {
     }
 
     return word.join('').toLowerCase();
+  }
+
+  static isValidSelection(selection) {
+    const validSelection = [];
+
+    for (const index of selection) {
+      if (validSelection.length && !this.isValidIndex(validSelection, index)) {
+        return false;
+      }
+
+      validSelection.push(index);
+    }
+
+    return true;
+  }
+
+
+  static isValidIndex(validSelection, index) {
+    if (validSelection.indexOf(index) !== -1) return;
+
+    const lastSelectionIndex = validSelection[validSelection.length - 1];
+
+    const deltaIndex = index - lastSelectionIndex;
+
+    return (deltaIndex === -1 && !this.isIndexOutOfBounds({ x: -1, y: 0 }, index) ||
+           (deltaIndex === 1 && !this.isIndexOutOfBounds({ x: 1, y: 0 }, index)) ||
+           (deltaIndex === -4 && !this.isIndexOutOfBounds({ x: 0, y: -1 }, index)) ||
+           (deltaIndex === 4 && !this.isIndexOutOfBounds({ x: 0, y: 1 }, index)) ||
+           (deltaIndex === -5 && !this.isIndexOutOfBounds({ x: -1, y: -1 }, index)) ||
+           (deltaIndex === 5 && !this.isIndexOutOfBounds({ x: 1, y: 1 }, index)) ||
+           (deltaIndex === -3 && !this.isIndexOutOfBounds({ x: 1, y: -1 }, index)) ||
+           (deltaIndex === 3 && !this.isIndexOutOfBounds({ x: -1, y: 1 }, index)));
+  }
+
+  static isIndexOutOfBounds({ x, y }, index) {
+    return (index < 0 || index >= this.dice.length) ||
+           (x === 1 && index % this.boardWidth === 0) ||
+           (x === -1 && index % this.boardWidth === 3);
   }
 }
