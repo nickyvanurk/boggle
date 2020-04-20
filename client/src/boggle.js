@@ -47,7 +47,7 @@ export default class Boggle {
       const widthFraction = 100 / this.gameDurationInSeconds * elapsedTimeInSeconds;
 
       this.emitter.emit('ui-update-time-bar', widthFraction);
-    }, 1 / this.fps);
+    }, 1000 / this.fps);
 
     this.boggleTimeout = setTimeout(() => {
       clearTimeout(this.boggleTimeout);
