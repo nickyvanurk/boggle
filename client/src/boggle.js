@@ -119,7 +119,7 @@ export default class Boggle {
   }
 
   isValidWord(word) {
-    return word.length >= 3;
+    return word.length >= 3 && !this.foundWords.includes(word);
   }
 
   getScore() {
