@@ -27,21 +27,27 @@ router.get('/getboggleboard', ({ query }, res) => {
 });
 
 router.get('/isvalidword', ({ query }, res) => {
-  const { id, word } = query;
+  const { id, selection } = query;
 
-  if (!id || !word) {
-    res.send({ error: 'You must provide a board id and word' });
+  if (!id || !selection) {
+    res.send({ error: 'You must provide a board id and selection' });
   }
 
   if (!validator.isInt(id, { min: 0, max: 1000000000000 })) {
     return res.send({ error: 'Invalid id' });
   }
 
-  if (!validator.isAlpha(word) || !validator.isLength(word, { min: 3, max: 16 })) {
+  if (!Array.isArray(selection)) {
     return res.send({ error: 'Invalid word' });
   }
 
-  res.send({ isValid: Boggle.isValidWord(id, word) });
+  for (const index of selection) {
+    if (!validator.isInt(index, { min: 0, max: 15 })) {
+      return res.send({ error: 'Invalid word' });
+    }
+  }
+
+  res.send({ isValid: Boggle.isValidWord(id, selection) });
 });
 
 router.get('/scoreword', ({ query }, res) => {

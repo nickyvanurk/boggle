@@ -38,25 +38,14 @@ export default class Boggle {
   }
 
   static isValidWord(id, selection) {
-    const board = Boggle.getRandomId(id);
-
+    const board = Boggle.getRandomBoard(id);
     const word = Boggle.getWord(board, selection);
 
-    let foundWord = false;
+    const fileContent = fs.readFileSync(__dirname + '/../dictionaries/dutch.txt');
 
-    fs.readFile(__dirname + '/../dictionaries/dutch.txt', (error, data) => {
-      if (error) {
-        console.log(error);
-        return;
-      }
+    const re = new RegExp(`\\b${word}\\b`);
 
-      if (data.includes(`${word}\n`)) {
-        foundWord = true;
-        return;
-      }
-    });
-
-    return foundWord;
+    return re.test(fileContent);
   }
 
   static getWord(board, selection) {
@@ -66,6 +55,6 @@ export default class Boggle {
       word.push(board[index]);
     }
 
-    return word.join('');
+    return word.join('').toLowerCase();
   }
 }
