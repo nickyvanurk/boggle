@@ -81,7 +81,6 @@ export default class Boggle {
     return true;
   }
 
-
   static isValidIndex(validSelection, index) {
     if (validSelection.indexOf(index) !== -1) return;
 
