@@ -27,10 +27,18 @@ router.get('/getboggleboard', ({ query }, res) => {
 });
 
 router.get('/isvalidword', ({ query }, res) => {
-  const { id, selection } = query;
+  let { id, selection } = query;
+
+  if (typeof selection === 'string') {
+    selection = selection.split(',');
+  }
 
   if (!id || !selection) {
-    res.send({ error: 'You must provide a board id and selection' });
+    return res.send({ error: 'You must provide a board id and selection' });
+  }
+
+  if (selection.length < 3) {
+    return res.send({ error: 'You must provide a board id and selection' });
   }
 
   if (!validator.isInt(id, { min: 0, max: 1000000000000 })) {
@@ -47,7 +55,10 @@ router.get('/isvalidword', ({ query }, res) => {
     }
   }
 
-  res.send({ valid: Boggle.isValidWord(id, selection) });
+  res.send({
+    valid: Boggle.isValidWord(id, selection),
+    word: Boggle.getWord(id, selection)
+  });
 });
 
 router.get('/getwordscore', ({ query }, res) => {

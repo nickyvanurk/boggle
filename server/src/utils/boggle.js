@@ -40,8 +40,7 @@ export default class Boggle {
   static isValidWord(id, selection) {
     if (!this.isValidSelection(selection)) return false;
 
-    const board = Boggle.getRandomBoard(id);
-    const word = Boggle.getWord(board, selection);
+    const word = Boggle.getWord(id, selection);
 
     const fileContent = fs.readFileSync(__dirname + '/../dictionaries/dutch.txt');
 
@@ -50,7 +49,8 @@ export default class Boggle {
     return re.test(fileContent);
   }
 
-  static getWord(board, selection) {
+  static getWord(id, selection) {
+    const board = Boggle.getRandomBoard(id);
     const word = [];
 
     for (const index of selection) {
