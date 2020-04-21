@@ -4,8 +4,10 @@ import Board from "./board";
 class Game extends React.Component {
   render() {
     return (
-      <div id="game">
-        <Board />
+      <div className="game">
+        <div className="game-board">
+          <Board />
+        </div>
       </div>
     );
   }
