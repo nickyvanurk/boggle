@@ -5,11 +5,12 @@ export default class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: null,
       squares: Array(16).fill(null),
       selection: [],
       isSelecting: false,
       error: null,
-      isLoaded: false,
+      isLoaded: false
     };
   }
 
@@ -19,6 +20,7 @@ export default class Board extends React.Component {
       .then((result) => {
         this.setState({
           isLoaded: true,
+          id: result.id,
           squares: result.board
         });
       }, (error) => {
@@ -48,10 +50,18 @@ export default class Board extends React.Component {
   }
 
   handleMouseUp() {
+    const {id, selection} = this.state;
+    this.checkSelection(id, selection);
     this.resetSelection();
   }
 
   handleMouseLeave() {
+    if (!this.state.selection.length) {
+      return;
+    }
+
+    const {id, selection} = this.state;
+    this.checkSelection(id, selection);
     this.resetSelection();
   }
 
@@ -68,6 +78,18 @@ export default class Board extends React.Component {
     });
   }
 
+  checkSelection(id, selection) {
+    fetch(`//localhost:3000/isvalidword?id=${id}&selection=${selection}`)
+      .then(res => res.json())
+      .then(({valid, word}) => {
+        if (valid) {
+          this.props.onFoundWord(word);
+        }
+      }, (error) => {
+        this.setState({error});
+      });
+  }
+
   renderSquare(i) {
     return (
       <Square value={this.state.squares[i]}
@@ -78,7 +100,7 @@ export default class Board extends React.Component {
   }
 
   render() {
-    const { error, isLoaded } = this.state;
+    const {error, isLoaded} = this.state;
 
     if (error) {
       return <div>Error: {error.message}</div>;
