@@ -32,7 +32,6 @@ export default class Board extends React.Component {
   handleMouseDown(i) {
     this.setState({isSelecting: true});
 
-    console.log(this.state.isSelecting);
     if (this.state.selection.includes(i)) {
       return;
     }
