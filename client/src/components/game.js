@@ -63,7 +63,8 @@ class Game extends React.Component {
       return (
         <div className="game">
           <div className="found-words">
-            <FoundWordsWithScore words={this.state.foundWords} />
+            <FoundWordsWithScore words={this.state.foundWords}
+                                 maxWords={5} />
           </div>
           <div className="game-board">
             <Board squares={this.state.squares}
