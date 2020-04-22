@@ -36,6 +36,10 @@ class Game extends React.Component {
       .then(res => res.json())
       .then(({valid, word}) => {
         if (valid) {
+          if (this.state.foundWords.includes(word)){
+            return;
+          }
+
           const foundWords = this.state.foundWords.slice();
           foundWords.push(word);
           this.setState({foundWords});
