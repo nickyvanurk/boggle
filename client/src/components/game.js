@@ -6,7 +6,7 @@ import GameOver from './game-over';
 
 class Game extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       id: null,
       squares: Array(16).fill(null),
@@ -45,7 +45,7 @@ class Game extends React.Component {
       } else {
         if (minutes === 0) {
           clearInterval(this.tick);
-          this.props.handleGameOver();
+          this.handleGameOver();
         } else {
           this.setState({
             minutes: minutes - 1,

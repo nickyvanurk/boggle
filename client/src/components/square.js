@@ -1,11 +1,13 @@
 import React from 'react';
 
 export default function Square(props) {
+  const {isSelected, onMouseDown, onMouseEnter, value} = props;
+
   return (
-    <button className={`square ${props.isSelected ? 'selected' : ''}`}
-            onMouseDown={props.onMouseDown}
-            onMouseEnter={props.onMouseEnter}>
-      {props.value}
+    <button className={`square ${isSelected ? 'selected' : ''}`}
+            onMouseDown={onMouseDown}
+            onMouseEnter={onMouseEnter}>
+      {value}
     </button>
   );
 }
