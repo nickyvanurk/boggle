@@ -62,7 +62,7 @@ class Game extends React.Component {
     } else {
       return (
         <div className="game">
-          <div className="found-words-with-score">
+          <div className="found-words">
             <FoundWordsWithScore words={this.state.foundWords} />
           </div>
           <div className="game-board">

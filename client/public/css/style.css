@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .game {
   display: flex;
   height: 100vh;
@@ -26,4 +30,25 @@
 
 .square.selected {
   background: rgb(219, 219, 219)
+}
+
+.found-words {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  height: 133px;
+  width: 132px;
+  padding: 6px;
+  font-size: 12px;
+  line-height: 24px;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.found-words-word {
+  text-transform: uppercase;
+}
+
+.found-words-score {
+  float: right;
 }
