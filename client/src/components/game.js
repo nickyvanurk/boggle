@@ -1,5 +1,6 @@
 import React from "react";
 import Board from "./board";
+import FoundWordsWithScore from './found-words-with-score';
 
 class Game extends React.Component {
   constructor(props) {
@@ -34,14 +35,16 @@ class Game extends React.Component {
     const {id} = this.state;
     fetch(`//localhost:3000/isvalidword?id=${id}&selection=${selection}`)
       .then(res => res.json())
-      .then(({valid, word}) => {
+      .then(({valid, word, score}) => {
         if (valid) {
-          if (this.state.foundWords.includes(word)){
-            return;
+          for (const obj of this.state.foundWords) {
+            if (obj.word === word) {
+              return;
+            }
           }
 
           const foundWords = this.state.foundWords.slice();
-          foundWords.push(word);
+          foundWords.push({word, score});
           this.setState({foundWords});
         }
       }, (error) => {
@@ -59,9 +62,12 @@ class Game extends React.Component {
     } else {
       return (
         <div className="game">
+          <div className="found-words-with-score">
+            <FoundWordsWithScore words={this.state.foundWords} />
+          </div>
           <div className="game-board">
             <Board squares={this.state.squares}
-                  onSelection={(selection) => this.handleSelection(selection)} />
+                   onSelection={(selection) => this.handleSelection(selection)} />
           </div>
         </div>
       );

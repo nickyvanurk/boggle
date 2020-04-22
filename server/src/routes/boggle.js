@@ -55,9 +55,12 @@ router.get('/isvalidword', ({ query }, res) => {
     }
   }
 
+  const word = Boggle.getWord(id, selection);
+
   res.send({
     valid: Boggle.isValidWord(id, selection),
-    word: Boggle.getWord(id, selection)
+    word: Boggle.getWord(id, selection),
+    score: Boggle.getWordScore(word)
   });
 });
 
