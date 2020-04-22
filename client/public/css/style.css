@@ -63,6 +63,12 @@
   float: right;
 }
 
+.game-clock {
+  text-align: center;
+  padding: 14px;
+  margin-top: -14px;
+}
+
 .modal {
   background: #fff;
   border: 1px solid #999;

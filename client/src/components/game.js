@@ -1,6 +1,7 @@
 import React from "react";
 import Board from "./board";
 import FoundWordsWithScore from './found-words-with-score';
+import Clock from './clock';
 import GameOver from './game-over';
 
 class Game extends React.Component {
@@ -12,7 +13,9 @@ class Game extends React.Component {
       foundWords: [],
       isLoaded: false,
       error: null,
-      isGameOver: false
+      isGameOver: false,
+      seconds: 0,
+      minutes: 3
     };
   }
 
@@ -31,6 +34,36 @@ class Game extends React.Component {
           error
         });
       });
+
+    this.tick = setInterval(() => {
+      const {seconds, minutes} = this.state;
+
+      if (seconds > 0) {
+        this.setState({
+          seconds: seconds - 1
+        });
+      } else {
+        if (minutes === 0) {
+          clearInterval(this.tick);
+          this.props.handleGameOver();
+        } else {
+          this.setState({
+            minutes: minutes - 1,
+            seconds: 59
+          });
+        }
+      }
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.tick);
+  }
+
+  handleGameOver() {
+    this.setState({
+      isGameOver: !this.state.isGameOver
+    });
   }
 
   handleSelection(selection) {
@@ -64,14 +97,21 @@ class Game extends React.Component {
     } else {
       return (
         <div className="game">
+          <div className="game-clock">
+            <Clock seconds={this.state.seconds}
+                   minutes={this.state.minutes} />
+          </div>
+
           <div className="found-words">
             <FoundWordsWithScore words={this.state.foundWords}
                                  maxWords={5} />
           </div>
+
           <div className="game-board">
             <Board squares={this.state.squares}
                    onSelection={(selection) => this.handleSelection(selection)} />
           </div>
+
           {this.state.isGameOver && (
             <div className="modal">
               <GameOver />
