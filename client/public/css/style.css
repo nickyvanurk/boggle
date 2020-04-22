@@ -9,6 +9,10 @@
   justify-content: center;
 }
 
+.game {
+  position: relative;
+}
+
 .game-board {
   float: left;
   height: 133px;
@@ -57,4 +61,17 @@
 
 .found-words-score {
   float: right;
+}
+
+.modal {
+  background: #fff;
+  border: 1px solid #999;
+  width: 174px;
+  height: 90px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -87px;
+  margin-top: -45px;
+  padding: 12px;
 }

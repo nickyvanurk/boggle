@@ -1,6 +1,7 @@
 import React from "react";
 import Board from "./board";
 import FoundWordsWithScore from './found-words-with-score';
+import GameOver from './game-over';
 
 class Game extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class Game extends React.Component {
       squares: Array(16).fill(null),
       foundWords: [],
       isLoaded: false,
-      error: null
+      error: null,
+      isGameOver: false
     };
   }
 
@@ -70,6 +72,11 @@ class Game extends React.Component {
             <Board squares={this.state.squares}
                    onSelection={(selection) => this.handleSelection(selection)} />
           </div>
+          {this.state.isGameOver && (
+            <div className="modal">
+              <GameOver />
+            </div>
+          )}
         </div>
       );
     }
