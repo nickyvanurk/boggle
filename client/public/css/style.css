@@ -59,6 +59,7 @@
   line-height: 24px;
   margin-right: 5px;
   font-weight: bold;
+  margin-top: -1px;
 }
 
 .found-words-word {
@@ -72,12 +73,17 @@
 .boggle-modal {
   background: #fff;
   border: 1px solid #999;
-  width: 174px;
-  height: 90px;
+  width: 177px;
+  height: 129px;
   position: absolute;
   left: 50%;
   top: 60%;
-  margin-left: -87px;
-  margin-top: -45px;
+  margin-left: -88px;
+  margin-top: -66px;
   padding: 12px;
+  text-align: center;
+}
+
+.boggle-modal {
+  font-size: 14px;
 }
