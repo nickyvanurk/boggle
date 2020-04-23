@@ -13,11 +13,12 @@ export default class Boggle extends React.Component {
       foundWords: [],
       isLoaded: false,
       error: null,
-      isGameOver: false,
+      isGameOver: true,
       countdown: {
         seconds: 0,
         minutes: 3
-      }
+      },
+      highscore: []
     };
   }
 
@@ -94,6 +95,12 @@ export default class Boggle extends React.Component {
       });
   }
 
+  handleHighscoreSubmit(playerName, score) {
+    const highscore = this.state.highscore.slice();
+    highscore.push({playerName, score});
+    this.setState({highscore});
+  }
+
   getTotalScore() {
     return this.state.foundWords.reduce((totalScore, word) => {
       return totalScore + word.score
@@ -127,7 +134,8 @@ export default class Boggle extends React.Component {
 
           {this.state.isGameOver && (
             <div className="boggle-modal">
-              <GameOver totalScore={this.getTotalScore()} />
+              <GameOver totalScore={this.getTotalScore()}
+                        onHighscoreSubmit={(name, score) => this.handleHighscoreSubmit(name, score)} />
             </div>
           )}
         </div>
