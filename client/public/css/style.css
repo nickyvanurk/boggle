@@ -9,11 +9,11 @@
   justify-content: center;
 }
 
-.game {
+.boggle {
   position: relative;
 }
 
-.game-board {
+.boggle-board {
   float: left;
   height: 133px;
   width: 132px;
@@ -42,13 +42,13 @@
   background: rgb(219, 219, 219)
 }
 
-.game-clock {
+.boggle-countdown {
   text-align: center;
   padding: 14px;
   margin-top: -14px;
 }
 
-.game-found-words {
+.boggle-found-words {
   background: #fff;
   border: 1px solid #999;
   float: left;
@@ -61,15 +61,15 @@
   font-weight: bold;
 }
 
-.game-found-words-word {
+.found-words-word {
   text-transform: uppercase;
 }
 
-.game-found-words-score {
+.found-words-score {
   float: right;
 }
 
-.game-modal {
+.boggle-modal {
   background: #fff;
   border: 1px solid #999;
   width: 174px;

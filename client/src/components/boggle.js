@@ -103,24 +103,24 @@ export default class Boggle extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <div className="game">
-          <div className="game-clock">
+        <div className="boggle">
+          <div className="boggle-countdown">
             <Countdown seconds={this.state.countdown.seconds}
                        minutes={this.state.countdown.minutes} />
           </div>
 
-          <div className="game-found-words">
+          <div className="boggle-found-words">
             <FoundWordsWithScore words={this.state.foundWords}
                                  maxWords={5} />
           </div>
 
-          <div className="game-board">
+          <div className="boggle-board">
             <Board letters={this.state.letters}
                    onSelectWord={(lettersIndices) => this.handleSelectWord(lettersIndices)} />
           </div>
 
           {this.state.isGameOver && (
-            <div className="game-modal">
+            <div className="boggle-modal">
               <GameOver />
             </div>
           )}
