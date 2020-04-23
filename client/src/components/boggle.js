@@ -29,6 +29,14 @@ export default class Boggle extends React.Component {
   }
 
   componentDidMount() {
+    this.startGame();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.tick);
+  }
+
+  startGame() {
     fetch('//localhost:3000/getboggleboard')
       .then(res => res.json())
       .then((result) => {
@@ -57,7 +65,7 @@ export default class Boggle extends React.Component {
       } else {
         if (minutes === 0) {
           clearInterval(this.tick);
-          this.handleGameOver();
+          this.setState({isGameOver: true});
         } else {
           this.setState({
             countdown: {
@@ -70,13 +78,19 @@ export default class Boggle extends React.Component {
     }, 1000);
   }
 
-  componentWillUnmount() {
-    clearInterval(this.tick);
-  }
-
-  handleGameOver() {
+  resetGame() {
     this.setState({
-      isGameOver: true
+      id: null,
+      letters: Array(16).fill(null),
+      foundWords: [],
+      isLoaded: false,
+      error: null,
+      isGameOver: false,
+      hasSubmitHighscore: false,
+      countdown: {
+        seconds: 0,
+        minutes: 3
+      }
     });
   }
 
@@ -114,7 +128,8 @@ export default class Boggle extends React.Component {
   }
 
   handlePlayAgainClick() {
-    this.setState({isGameOver: false, hasSubmitHighscore: false});
+    this.resetGame();
+    this.startGame();
   }
 
   getTotalScore() {
