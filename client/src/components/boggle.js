@@ -95,6 +95,10 @@ export default class Boggle extends React.Component {
   }
 
   handleSelectWord(lettersIndices) {
+    if (this.state.isGameOver) {
+      return;
+    }
+
     const {id} = this.state;
     fetch(`//localhost:3000/isvalidword?id=${id}&selection=${lettersIndices}`)
       .then(res => res.json())
