@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function HighScore({highscores, maxPlayers, onPlayAgainClick}) {
   return (
-    <div className="high-score">
+    <div>
       <h2>High Score</h2>
 
       {highscores.slice(0, maxPlayers)

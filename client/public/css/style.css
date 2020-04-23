@@ -71,17 +71,22 @@
 }
 
 .boggle-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
   background: #fff;
   border: 1px solid #999;
-  width: 238px;
-  height: 216px;
-  position: absolute;
-  left: 50%;
-  top: 60%;
-  margin-left: -119px;
-  margin-top: -108px;
-  padding: 12px;
+  padding: 20px 30px;
   text-align: center;
+}
+
+.boggle-modal h2 {
+  margin: 0 0 20px;
+}
+
+.boggle-modal button {
+  margin: 20px 0 0;
 }
 
 .boggle-modal span {
@@ -107,4 +112,13 @@
 
 .boggle-modal button:hover {
   background: #e4e2e2;
+}
+
+.high-score-entry {
+  text-align: left;
+  margin: 0 28px 4px;
+}
+
+.player-score {
+  float: right;
 }
