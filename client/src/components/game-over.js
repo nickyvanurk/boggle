@@ -12,6 +12,8 @@ export default class GameOver extends React.Component {
       <div>
         <h2>Game Over</h2>
         <span>You scored {totalScore} {totalScore === 1 ? 'point' : 'points'}</span>
+        <input placeholder="Player name" />
+        <button>Submit Highscore</button>
       </div>
     );
   }
