@@ -3,6 +3,7 @@ import Board from "./board";
 import FoundWordsWithScore from './found-words-with-score';
 import Countdown from './countdown';
 import GameOver from './game-over';
+import HighScore from './high-score';
 
 export default class Boggle extends React.Component {
   constructor(props) {
@@ -13,16 +14,18 @@ export default class Boggle extends React.Component {
       foundWords: [],
       isLoaded: false,
       error: null,
-      isGameOver: true,
+      isGameOver: false,
+      hasSubmitHighscore: false,
       countdown: {
         seconds: 0,
         minutes: 3
       },
-      highscore: []
+      highscores: []
     };
 
     this.handleSelectWord = this.handleSelectWord.bind(this);
     this.handleHighscoreSubmit = this.handleHighscoreSubmit.bind(this);
+    this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
   }
 
   componentDidMount() {
@@ -99,9 +102,19 @@ export default class Boggle extends React.Component {
   }
 
   handleHighscoreSubmit(playerName, score) {
-    const highscore = this.state.highscore.slice();
-    highscore.push({playerName, score});
-    this.setState({highscore});
+    const highscores = this.state.highscores.slice();
+    highscores.push({playerName, score});
+
+    highscores.sort((a, b) => {
+      return a.score > b.score ? -1 :
+             a.score < b.score ? 1 : 0;
+    })
+
+    this.setState({highscores, hasSubmitHighscore: true});
+  }
+
+  handlePlayAgainClick() {
+    this.setState({isGameOver: false, hasSubmitHighscore: false});
   }
 
   getTotalScore() {
@@ -137,8 +150,13 @@ export default class Boggle extends React.Component {
 
           {this.state.isGameOver && (
             <div className="boggle-modal">
-              <GameOver totalScore={this.getTotalScore()}
-                        onHighscoreSubmit={this.handleHighscoreSubmit} />
+              {this.state.hasSubmitHighscore
+                ? <HighScore highscores={this.state.highscores}
+                             maxPlayers={5}
+                             onPlayAgainClick={this.handlePlayAgainClick} />
+                : <GameOver totalScore={this.getTotalScore()}
+                            onHighscoreSubmit={this.handleHighscoreSubmit} />
+              }
             </div>
           )}
         </div>
