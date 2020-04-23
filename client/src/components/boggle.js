@@ -103,17 +103,13 @@ export default class Boggle extends React.Component {
     fetch(`//localhost:3000/isvalidword?id=${id}&selection=${lettersIndices}`)
       .then(res => res.json())
       .then(({valid, word, score}) => {
-        if (valid) {
-          for (const obj of this.state.foundWords) {
-            if (obj.word === word) {
-              return;
-            }
-          }
-
-          const foundWords = this.state.foundWords.slice();
-          foundWords.push({word, score});
-          this.setState({foundWords});
+        if (!valid || this.isWordFound(word)) {
+          return;
         }
+
+        const foundWords = this.state.foundWords.slice();
+        foundWords.push({word, score});
+        this.setState({foundWords});
       }, (error) => {
         this.setState({error});
       });
@@ -140,6 +136,10 @@ export default class Boggle extends React.Component {
     return this.state.foundWords.reduce((totalScore, word) => {
       return totalScore + word.score
     }, 0);
+  }
+
+  isWordFound(word) {
+    return this.state.foundWords.some(obj => obj.word === word);
   }
 
   render() {
