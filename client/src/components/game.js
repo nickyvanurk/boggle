@@ -9,7 +9,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       id: null,
-      squares: Array(16).fill(null),
+      letters: Array(16).fill(null),
       foundWords: [],
       isLoaded: false,
       error: null,
@@ -26,7 +26,7 @@ class Game extends React.Component {
         this.setState({
           isLoaded: true,
           id: result.id,
-          squares: result.board
+          letters: result.board
         });
       }, (error) => {
         this.setState({
@@ -66,9 +66,9 @@ class Game extends React.Component {
     });
   }
 
-  handleSelection(selection) {
+  handleSelectWord(lettersIndices) {
     const {id} = this.state;
-    fetch(`//localhost:3000/isvalidword?id=${id}&selection=${selection}`)
+    fetch(`//localhost:3000/isvalidword?id=${id}&selection=${lettersIndices}`)
       .then(res => res.json())
       .then(({valid, word, score}) => {
         if (valid) {
@@ -102,18 +102,18 @@ class Game extends React.Component {
                    minutes={this.state.minutes} />
           </div>
 
-          <div className="found-words">
+          <div className="game-found-words">
             <FoundWordsWithScore words={this.state.foundWords}
                                  maxWords={5} />
           </div>
 
           <div className="game-board">
-            <Board squares={this.state.squares}
-                   onSelection={(selection) => this.handleSelection(selection)} />
+            <Board letters={this.state.letters}
+                   onSelectWord={(lettersIndices) => this.handleSelectWord(lettersIndices)} />
           </div>
 
           {this.state.isGameOver && (
-            <div className="modal">
+            <div className="game-modal">
               <GameOver />
             </div>
           )}

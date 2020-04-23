@@ -1,11 +1,11 @@
 import React from 'react';
-import Square from './square';
+import Letter from './letter';
 
 export default class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selection: [],
+      selectedLettersIndices: [],
       isSelecting: false,
     };
   }
@@ -13,54 +13,52 @@ export default class Board extends React.Component {
   handleMouseDown(i) {
     this.setState({isSelecting: true});
 
-    if (this.state.selection.includes(i)) {
-      return;
+    if (!this.isLetterSelected(i)) {
+      this.selectLetter(i);
     }
-
-    this.selectSquare(i);
   }
 
   handleMouseEnter(i) {
-    if (!this.state.isSelecting || this.state.selection.includes(i)) {
-      return;
+    if (this.state.isSelecting && !this.isLetterSelected(i)) {
+      this.selectLetter(i);
     }
-
-    this.selectSquare(i);
   }
 
   handleMouseUp() {
-    const {selection} = this.state;
-    this.props.onSelection(selection);
-    this.resetSelection();
+    this.props.onSelectWord(this.state.selectedLettersIndices);
+    this.deselectLetters();
   }
 
   handleMouseLeave() {
-    if (!this.state.selection.length) {
-      return;
+    const {selectedLettersIndices} = this.state;
+
+    if (selectedLettersIndices.length) {
+      this.props.onSelectWord(selectedLettersIndices);
+      this.deselectLetters();
     }
-
-    const {selection} = this.state;
-    this.props.onSelection(selection);
-    this.resetSelection();
   }
 
-  selectSquare(i) {
-    const selection = this.state.selection.slice();
-    selection.push(i);
-    this.setState({selection});
+  isLetterSelected(i) {
+    return this.state.selectedLettersIndices.includes(i);
   }
 
-  resetSelection() {
+  selectLetter(i) {
+    const selectedLettersIndices = this.state.selectedLettersIndices.slice();
+    selectedLettersIndices.push(i);
+    this.setState({selectedLettersIndices});
+  }
+
+  deselectLetters() {
     this.setState({
-      isSelecting: false,
-      selection: []
+      selectedLettersIndices: [],
+      isSelecting: false
     });
   }
 
-  renderSquare(i) {
+  renderLetter(i) {
     return (
-      <Square value={this.props.squares[i]}
-              isSelected={this.state.selection.includes(i)}
+      <Letter value={this.props.letters[i]}
+              isSelected={this.isLetterSelected(i)}
               onMouseDown={() => this.handleMouseDown(i)}
               onMouseEnter={() => this.handleMouseEnter(i)} />
     );
@@ -71,28 +69,28 @@ export default class Board extends React.Component {
       <div onMouseUp={() => this.handleMouseUp()}
            onMouseLeave={() => this.handleMouseLeave()}>
         <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-          {this.renderSquare(3)}
+          {this.renderLetter(0)}
+          {this.renderLetter(1)}
+          {this.renderLetter(2)}
+          {this.renderLetter(3)}
         </div>
         <div className="board-row">
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
+          {this.renderLetter(4)}
+          {this.renderLetter(5)}
+          {this.renderLetter(6)}
+          {this.renderLetter(7)}
         </div>
         <div className="board-row">
-          {this.renderSquare(8)}
-          {this.renderSquare(9)}
-          {this.renderSquare(10)}
-          {this.renderSquare(11)}
+          {this.renderLetter(8)}
+          {this.renderLetter(9)}
+          {this.renderLetter(10)}
+          {this.renderLetter(11)}
         </div>
         <div className="board-row">
-          {this.renderSquare(12)}
-          {this.renderSquare(13)}
-          {this.renderSquare(14)}
-          {this.renderSquare(15)}
+          {this.renderLetter(12)}
+          {this.renderLetter(13)}
+          {this.renderLetter(14)}
+          {this.renderLetter(15)}
         </div>
       </div>
     );

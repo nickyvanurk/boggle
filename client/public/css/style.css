@@ -19,7 +19,7 @@
   width: 132px;
 }
 
-.square {
+.letter {
   background: #fff;
   border: 1px solid #999;
   float: left;
@@ -34,15 +34,21 @@
   text-align: center;
 }
 
-.square:focus {
+.letter:focus {
   outline: none;
 }
 
-.square.selected {
+.letter.selected {
   background: rgb(219, 219, 219)
 }
 
-.found-words {
+.game-clock {
+  text-align: center;
+  padding: 14px;
+  margin-top: -14px;
+}
+
+.game-found-words {
   background: #fff;
   border: 1px solid #999;
   float: left;
@@ -55,21 +61,15 @@
   font-weight: bold;
 }
 
-.found-words-word {
+.game-found-words-word {
   text-transform: uppercase;
 }
 
-.found-words-score {
+.game-found-words-score {
   float: right;
 }
 
-.game-clock {
-  text-align: center;
-  padding: 14px;
-  margin-top: -14px;
-}
-
-.modal {
+.game-modal {
   background: #fff;
   border: 1px solid #999;
   width: 174px;

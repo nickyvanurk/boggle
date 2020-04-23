@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Square(props) {
+export default function Letter(props) {
   const {isSelected, onMouseDown, onMouseEnter, value} = props;
 
   return (
-    <button className={`square ${isSelected ? 'selected' : ''}`}
+    <button className={`letter ${isSelected ? 'selected' : ''}`}
             onMouseDown={onMouseDown}
             onMouseEnter={onMouseEnter}>
       {value}
