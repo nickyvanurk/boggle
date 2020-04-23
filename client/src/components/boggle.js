@@ -69,7 +69,7 @@ export default class Boggle extends React.Component {
 
   handleGameOver() {
     this.setState({
-      isGameOver: !this.state.isGameOver
+      isGameOver: true
     });
   }
 
