@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Clock({seconds, minutes}) {
+export default function Countdown({seconds, minutes}) {
   if (seconds < 10) {
     seconds = '0' + seconds;
   }

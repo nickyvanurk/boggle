@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import Game from './components/game';
+import Boggle from './components/boggle';
 
 ReactDOM.render(
-  <Game />,
+  <Boggle />,
   document.getElementById('root')
 );
 

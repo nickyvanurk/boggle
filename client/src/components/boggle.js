@@ -1,10 +1,10 @@
 import React from "react";
 import Board from "./board";
 import FoundWordsWithScore from './found-words-with-score';
-import Clock from './clock';
+import Countdown from './countdown';
 import GameOver from './game-over';
 
-class Game extends React.Component {
+export default class Boggle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,8 +14,10 @@ class Game extends React.Component {
       isLoaded: false,
       error: null,
       isGameOver: false,
-      seconds: 0,
-      minutes: 3
+      countdown: {
+        seconds: 0,
+        minutes: 3
+      }
     };
   }
 
@@ -36,11 +38,14 @@ class Game extends React.Component {
       });
 
     this.tick = setInterval(() => {
-      const {seconds, minutes} = this.state;
+      const {seconds, minutes} = this.state.countdown;
 
       if (seconds > 0) {
         this.setState({
-          seconds: seconds - 1
+          countdown: {
+            seconds: seconds - 1,
+            minutes
+          }
         });
       } else {
         if (minutes === 0) {
@@ -48,8 +53,10 @@ class Game extends React.Component {
           this.handleGameOver();
         } else {
           this.setState({
-            minutes: minutes - 1,
-            seconds: 59
+            countdown: {
+              seconds: 59,
+              minutes: minutes - 1
+            }
           });
         }
       }
@@ -98,8 +105,8 @@ class Game extends React.Component {
       return (
         <div className="game">
           <div className="game-clock">
-            <Clock seconds={this.state.seconds}
-                   minutes={this.state.minutes} />
+            <Countdown seconds={this.state.countdown.seconds}
+                       minutes={this.state.countdown.minutes} />
           </div>
 
           <div className="game-found-words">
@@ -122,5 +129,3 @@ class Game extends React.Component {
     }
   }
 }
-
-export default Game;
