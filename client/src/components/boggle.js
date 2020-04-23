@@ -94,6 +94,12 @@ export default class Boggle extends React.Component {
       });
   }
 
+  getTotalScore() {
+    return this.state.foundWords.reduce((totalScore, word) => {
+      return totalScore + word.score
+    }, 0);
+  }
+
   render() {
     const {error, isLoaded} = this.state;
 
@@ -121,7 +127,7 @@ export default class Boggle extends React.Component {
 
           {this.state.isGameOver && (
             <div className="boggle-modal">
-              <GameOver />
+              <GameOver totalScore={this.getTotalScore()} />
             </div>
           )}
         </div>

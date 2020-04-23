@@ -6,9 +6,12 @@ export default class GameOver extends React.Component {
   }
 
   render() {
+    const {totalScore} = this.props;
+
     return (
       <div>
         <h2>Game Over</h2>
+        <span>You scored {totalScore} {totalScore === 1 ? 'point' : 'points'}</span>
       </div>
     );
   }
