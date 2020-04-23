@@ -91,6 +91,7 @@
 
 .boggle-modal span {
   font-size: 14px;
+  line-height: 20px;
 }
 
 .boggle-modal input {
@@ -117,6 +118,7 @@
 .high-score-entry {
   text-align: left;
   margin-bottom: 4px;
+  display: flex;
 }
 
 .high-score-entry:last-of-type {
@@ -125,8 +127,15 @@
 
 .player-name {
   text-align: left;
+  flex-grow: 10;
 }
 
 .player-score {
-  float: right;
+  flex-grow: 1;
+}
+
+.player-play-board {
+  height: 20px;
+  flex-grow: 1;
+  cursor: pointer;
 }

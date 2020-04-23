@@ -25,6 +25,7 @@ export default class Boggle extends React.Component {
 
     this.handleSelectWord = this.handleSelectWord.bind(this);
     this.handleHighscoreSubmit = this.handleHighscoreSubmit.bind(this);
+    this.handlePlayBoardClick = this.handlePlayBoardClick.bind(this);
     this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
   }
 
@@ -36,8 +37,10 @@ export default class Boggle extends React.Component {
     clearInterval(this.tick);
   }
 
-  startGame() {
-    fetch('//localhost:3000/getboggleboard')
+  startGame(boardId = null) {
+    const urlParams = boardId ? `?id=${boardId}` : '';
+
+    fetch(`//localhost:3000/getboggleboard${urlParams}`)
       .then(res => res.json())
       .then((result) => {
         this.setState({
@@ -117,7 +120,7 @@ export default class Boggle extends React.Component {
 
   handleHighscoreSubmit(playerName, score) {
     const highscores = this.state.highscores.slice();
-    highscores.push({playerName, score});
+    highscores.push({boardId: this.state.id, playerName, score});
 
     highscores.sort((a, b) => {
       return a.score > b.score ? -1 :
@@ -125,6 +128,13 @@ export default class Boggle extends React.Component {
     })
 
     this.setState({highscores, hasSubmitHighscore: true});
+  }
+
+  handlePlayBoardClick(event) {
+    const boardId = event.currentTarget.id;
+
+    this.resetGame();
+    this.startGame(boardId);
   }
 
   handlePlayAgainClick() {
@@ -172,6 +182,7 @@ export default class Boggle extends React.Component {
               {this.state.hasSubmitHighscore
                 ? <HighScore highscores={this.state.highscores}
                              maxPlayers={5}
+                             onPlayBoardClick={this.handlePlayBoardClick}
                              onPlayAgainClick={this.handlePlayAgainClick} />
                 : <GameOver totalScore={this.getTotalScore()}
                             onHighscoreSubmit={this.handleHighscoreSubmit} />
