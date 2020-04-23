@@ -116,7 +116,15 @@
 
 .high-score-entry {
   text-align: left;
-  margin: 0 28px 4px;
+  margin-bottom: 4px;
+}
+
+.high-score-entry:last-of-type {
+  margin-bottom: 0;
+}
+
+.player-name {
+  text-align: left;
 }
 
 .player-score {
