@@ -8,6 +8,11 @@ export default class Board extends React.Component {
       selectedLettersIndices: [],
       isSelecting: false,
     };
+
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   handleMouseDown(i) {
@@ -66,8 +71,8 @@ export default class Board extends React.Component {
 
   render() {
     return (
-      <div onMouseUp={() => this.handleMouseUp()}
-           onMouseLeave={() => this.handleMouseLeave()}>
+      <div onMouseUp={this.handleMouseUp}
+           onMouseLeave={this.handleMouseLeave}>
         <div className="board-row">
           {this.renderLetter(0)}
           {this.renderLetter(1)}

@@ -20,6 +20,9 @@ export default class Boggle extends React.Component {
       },
       highscore: []
     };
+
+    this.handleSelectWord = this.handleSelectWord.bind(this);
+    this.handleHighscoreSubmit = this.handleHighscoreSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -129,13 +132,13 @@ export default class Boggle extends React.Component {
 
           <div className="boggle-board">
             <Board letters={this.state.letters}
-                   onSelectWord={(lettersIndices) => this.handleSelectWord(lettersIndices)} />
+                   onSelectWord={this.handleSelectWord} />
           </div>
 
           {this.state.isGameOver && (
             <div className="boggle-modal">
               <GameOver totalScore={this.getTotalScore()}
-                        onHighscoreSubmit={(name, score) => this.handleHighscoreSubmit(name, score)} />
+                        onHighscoreSubmit={this.handleHighscoreSubmit} />
             </div>
           )}
         </div>
