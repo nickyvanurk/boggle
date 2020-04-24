@@ -100,6 +100,11 @@
   border: 1px solid #999;
   padding: 6px 8px;
   font-size: 14px;
+  text-align: center;
+}
+
+.boggle-modal input.error {
+  border: 1px solid rgb(251, 182, 182);
 }
 
 .boggle-modal button {
