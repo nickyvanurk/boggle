@@ -132,15 +132,14 @@
 
 .player-name {
   text-align: left;
-  flex-grow: 10;
+  flex-grow: 1;
 }
 
 .player-score {
-  flex-grow: 1;
+  padding-right: 4px;
 }
 
 .player-play-board {
   height: 20px;
-  flex-grow: 1;
   cursor: pointer;
 }
