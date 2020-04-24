@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function FoundWordsWithScore({words, maxWords}) {
   return (
@@ -15,3 +16,8 @@ export default function FoundWordsWithScore({words, maxWords}) {
     </div>
   );
 }
+
+FoundWordsWithScore.propTypes = {
+  words: PropTypes.arrayOf(PropTypes.object).isRequired,
+  maxWords: PropTypes.number.isRequired
+};

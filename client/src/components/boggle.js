@@ -17,8 +17,8 @@ export default class Boggle extends React.Component {
       isGameOver: false,
       hasSubmitHighscore: false,
       countdown: {
-        seconds: 0,
-        minutes: 3
+        seconds: 2,
+        minutes: 0
       },
       highscores: []
     };

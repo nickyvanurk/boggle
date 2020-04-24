@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class GameOver extends React.Component {
   constructor(props) {
@@ -16,8 +17,8 @@ export default class GameOver extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.onHighscoreSubmit(this.state.playerName, this.props.totalScore);
     event.preventDefault();
+    this.props.onHighscoreSubmit(this.state.playerName, this.props.totalScore);
   }
 
   render() {
@@ -37,3 +38,8 @@ export default class GameOver extends React.Component {
     );
   }
 }
+
+GameOver.propTypes = {
+  totalScore: PropTypes.number.isRequired,
+  onHighscoreSubmit: PropTypes.func.isRequired
+};

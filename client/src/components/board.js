@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Letter from './letter';
 
 export default class Board extends React.Component {
@@ -101,3 +102,8 @@ export default class Board extends React.Component {
     );
   }
 }
+
+Board.propTypes = {
+  letters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onSelectWord: PropTypes.func.isRequired
+};

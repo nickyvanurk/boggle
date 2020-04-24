@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function HighScore(props) {
   const {
@@ -27,3 +28,10 @@ export default function HighScore(props) {
     </div>
   );
 }
+
+HighScore.propTypes = {
+  highscores: PropTypes.arrayOf(PropTypes.object).isRequired,
+  maxPlayers: PropTypes.number.isRequired,
+  onPlayBoardClick: PropTypes.func.isRequired,
+  onPlayAgainClick: PropTypes.func.isRequired
+};

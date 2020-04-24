@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Letter(props) {
   const {isSelected, onMouseDown, onMouseEnter, value} = props;
@@ -11,3 +12,10 @@ export default function Letter(props) {
     </button>
   );
 }
+
+Letter.propTypes = {
+  isSelected: PropTypes.bool.isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseDown: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
+};

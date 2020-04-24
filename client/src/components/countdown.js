@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Countdown({seconds, minutes}) {
   if (seconds < 10) {
@@ -12,3 +13,8 @@ export default function Countdown({seconds, minutes}) {
     </div>
   );
 }
+
+Countdown.propTypes = {
+  seconds: PropTypes.number.isRequired,
+  minutes: PropTypes.number.isRequired
+};
