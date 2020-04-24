@@ -1,3 +1,12 @@
+/* Color scheme
+ *
+ * Yellow: #ffce56;
+ * Red: #e66353
+ * Green: #a9ba5a
+ * Brown: #4c241d
+ * Olive: #efefd2
+ */
+
 * {
   box-sizing: border-box;
 }
@@ -7,6 +16,7 @@
   height: 100vh;
   align-items: center;
   justify-content: center;
+  background: #efefd2;
 }
 
 .boggle {
@@ -20,8 +30,8 @@
 }
 
 .letter {
-  background: #fff;
-  border: 1px solid #999;
+  background: #ffce56;
+  border: 1px solid #4c241d;
   float: left;
   height: 34px;
   width: 34px;
@@ -39,7 +49,7 @@
 }
 
 .letter.selected {
-  background: rgb(219, 219, 219)
+  background: #e66353;
 }
 
 .boggle-countdown {
@@ -49,8 +59,8 @@
 }
 
 .boggle-found-words {
-  background: #fff;
-  border: 1px solid #999;
+  background: #a9ba5a;
+  border: 1px solid #4c241d;
   float: left;
   height: 133px;
   width: 132px;
@@ -75,18 +85,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) !important;
-  background: #fff;
-  border: 1px solid #999;
+  background: #a9ba5a;
+  border: 1px solid #4c241d;
   padding: 20px 30px;
   text-align: center;
 }
 
 .boggle-modal h2 {
   margin: 0 0 20px;
-}
-
-.boggle-modal button {
-  margin: 20px 0 0;
 }
 
 .boggle-modal span {
@@ -96,24 +102,29 @@
 
 .boggle-modal input {
   width: 155px;
-  margin: 26px 16px -1px;
-  border: 1px solid #999;
+  margin: 26px 16px 0;
+  border: 1px solid #4c241d;
   padding: 6px 8px;
   font-size: 14px;
   text-align: center;
+  background: #ffce56;
+  height: 30px;
 }
 
 .boggle-modal input.error {
-  border: 1px solid rgb(251, 182, 182);
+  border: 1px solid #e66353;
 }
 
 .boggle-modal button {
   font-size: 12px;
-  background: #f0eeee;
-  border: 1px solid #999;
+  border: 1px solid #4c241d;
   padding: 5px;
   width: 155px;
   cursor: pointer;
+  background: #efefd2;
+  color: #4c241d;
+  margin-top: 20px;
+  height: 30px;
 }
 
 .boggle-modal button:hover {
@@ -141,5 +152,6 @@
 
 .player-play-board {
   height: 20px;
+  width: 20px;
   cursor: pointer;
 }
