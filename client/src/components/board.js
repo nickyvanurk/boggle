@@ -19,13 +19,13 @@ export default class Board extends React.Component {
   handleMouseDown(i) {
     this.setState({isSelecting: true});
 
-    if (!this.isLetterSelected(i)) {
+    if (this.isValidLetterSelection(i)) {
       this.selectLetter(i);
     }
   }
 
   handleMouseEnter(i) {
-    if (this.state.isSelecting && !this.isLetterSelected(i)) {
+    if (this.state.isSelecting && this.isValidLetterSelection(i)) {
       this.selectLetter(i);
     }
   }
@@ -59,6 +59,37 @@ export default class Board extends React.Component {
       selectedLettersIndices: [],
       isSelecting: false
     });
+  }
+
+  isValidLetterSelection(i) {
+    const {selectedLettersIndices} = this.state;
+
+    if (selectedLettersIndices.length === 0) {
+      return true;
+    }
+
+    if (selectedLettersIndices.includes(i)) {
+      return false;
+    }
+
+    const lastSelectionIndex = selectedLettersIndices[selectedLettersIndices.length - 1];
+    const deltaIndex = i - lastSelectionIndex;
+
+    return (deltaIndex === -1 && !this.isIndexOutOfBounds({ x: -1, y: 0 }, i) ||
+           (deltaIndex === 1 && !this.isIndexOutOfBounds({ x: 1, y: 0 }, i)) ||
+           (deltaIndex === -4 && !this.isIndexOutOfBounds({ x: 0, y: -1 }, i)) ||
+           (deltaIndex === 4 && !this.isIndexOutOfBounds({ x: 0, y: 1 }, i)) ||
+           (deltaIndex === -5 && !this.isIndexOutOfBounds({ x: -1, y: -1 }, i)) ||
+           (deltaIndex === 5 && !this.isIndexOutOfBounds({ x: 1, y: 1 }, i)) ||
+           (deltaIndex === -3 && !this.isIndexOutOfBounds({ x: 1, y: -1 }, i)) ||
+           (deltaIndex === 3 && !this.isIndexOutOfBounds({ x: -1, y: 1 }, i)));
+  }
+
+  isIndexOutOfBounds({ x }, i) {
+    const boardWidth = 4;
+    return (i < 0 || i >= this.props.letters.length) ||
+           (x === 1 && i % boardWidth === 0) ||
+           (x === -1 && i % boardWidth === 3);
   }
 
   renderLetter(i) {
