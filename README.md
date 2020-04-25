@@ -26,7 +26,7 @@ npm run start:client
 npm run start:server
 ```
 
-Surf to [localhost:8000](localhost:8000)!
+Surf to [localhost:8000](http://localhost:8000)!
 
 ## License
 
