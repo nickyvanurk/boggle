@@ -4,12 +4,12 @@
   "description": "",
   "scripts": {
     "start:client": "cd client && npm run start",
-    "start:server": "cd server && npm run start"
+    "start:server": "cd server && npm run start",
+    "install:client": "cd client && npm install",
+    "install:server": "cd server && npm install"
   },
   "keywords": [],
   "author": "Nicky van Urk",
   "license": "MIT",
-  "dependencies": {
-    "EventEmitter": "^1.0.0"
-  }
+  "dependencies": {}
 }
