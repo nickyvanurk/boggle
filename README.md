@@ -34,9 +34,9 @@ Surf to [localhost:8000](http://localhost:8000)!
 
 ## Built With
 
-* [React](http://www.dropwizard.io/1.0.2/docs/) - The UI library used
+* [React](https://reactjs.org/) - The UI library used
 * [Node](https://nodejs.org/en/about/) A JavaScript runtime
-* [Express](https://maven.apache.org/) - The web framework used for the API
+* [Express](https://expressjs.com/) - The web framework used for the API
 
 ## License
 
