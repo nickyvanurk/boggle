@@ -4,6 +4,10 @@ A simple and interesting puzzle to find the hidden Dutch words from the scattere
 
 ![Boggle demo](docs/boggle-demo.gif)
 
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
 ### Installing
 
 Clone Git repository
@@ -27,6 +31,12 @@ npm run start:server
 ```
 
 Surf to [localhost:8000](http://localhost:8000)!
+
+## Built With
+
+* [React](http://www.dropwizard.io/1.0.2/docs/) - The UI library used
+* [Node](https://nodejs.org/en/about/) A JavaScript runtime
+* [Express](https://maven.apache.org/) - The web framework used for the API
 
 ## License
 
